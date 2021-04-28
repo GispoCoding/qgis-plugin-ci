@@ -13,6 +13,12 @@ def replace_in_file(file_path: str, pattern, new: str, encoding: str = "utf8"):
         f.write(content)
 
 
+def append_to_file(file_path: str, new_line: str):
+    """ Append a line in a file. """
+    with open(file_path, "a", encoding="utf8") as f:
+        f.write("{}\n".format(new_line))
+
+
 def configure_file(source_file: str, dest_file: str, replace: dict):
     with open(source_file, "r", encoding="utf-8") as f:
         content = f.read()

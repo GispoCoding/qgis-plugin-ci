@@ -19,7 +19,7 @@ from utils import can_skip_test
 from qgispluginci.changelog import ChangelogParser
 from qgispluginci.exceptions import GithubReleaseNotFound
 from qgispluginci.parameters import DASH_WARNING, Parameters
-from qgispluginci.release import release
+from qgispluginci.release import check_release_keywords, release
 from qgispluginci.translation import Translation
 from qgispluginci.utils import replace_in_file
 
@@ -178,6 +178,25 @@ class TestRelease(unittest.TestCase):
             0,
             f"changelog detection failed in release: {data}",
         )
+
+    def test_release_latest_next(self):
+        """ Test releasing the latest and next versions. """
+        keywords = ("next", "latest")
+        for keyword in keywords:
+            with self.subTest(i=keyword):
+                release(self.parameters, keyword)
+                archive_name = self.parameters.archive_name(
+                    self.parameters.plugin_path, check_release_keywords(keyword)
+                )
+
+                with ZipFile(archive_name, "r") as zip_file:
+                    data = zip_file.read("qgis_plugin_CI_testing/metadata.txt")
+
+                self.assertEqual(
+                    data.find(b"version=latest"), -1
+                )  # Version is the one in __about__.py
+                self.assertGreater(data.find(b"gitSha1="), 0)
+                self.assertGreater(data.find(b"dateTime="), 0)
 
 
 if __name__ == "__main__":
