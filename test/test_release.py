@@ -180,7 +180,7 @@ class TestRelease(unittest.TestCase):
         )
 
     def test_release_latest_next(self):
-        """ Test releasing the latest and next versions. """
+        """Test releasing the latest and next versions."""
         keywords = ("next", "latest")
         for keyword in keywords:
             with self.subTest(i=keyword):

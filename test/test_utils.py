@@ -50,7 +50,7 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(version.is_prerelease)
 
     def test_next_version(self):
-        """ Test to guess the next version. """
+        """Test to guess the next version."""
         self.assertEqual(parse_tag("10.1.0").next_version().version, "10.1.1-alpha")
         self.assertEqual(
             parse_tag("10.1.0-beta").next_version().version, "10.1.0-beta.1"

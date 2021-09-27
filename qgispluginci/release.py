@@ -397,7 +397,7 @@ def upload_plugin_to_osgeo(username: str, password: str, archive: str):
 
 
 def check_release_keywords(release_version: str) -> str:
-    """ Check if we are releasing some special version shortcut. """
+    """Check if we are releasing some special version shortcut."""
     if release_version not in ("latest", "next"):
         return release_version
 
